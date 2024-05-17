@@ -23,7 +23,7 @@ jobs:
            from: ${{ secrets.MAIL_FROM }} #mail gonderdiyimizde ne gorunsun "github"
            to: ${{ secrets.MAIL_TO }} # push etdikde bu maile getsin
            username: ${{ secrets.MAIL_USERNAME }} #mail gondermek uchu  mail adresik
-           password: ${{ secrets.MAIL_PASSWORD }} #sifre
+           password: ${{ secrets.MAIL_PASSWORD }} #sifre ffrom ve password eyni olamldiir
            subject: ${{ github.event_name }} Notification #mail konusu
            body:  |
             There has been a new ${{ github.event_name }} in the repository.
@@ -31,5 +31,5 @@ jobs:
             Branch: ${{ github.ref }}
             Branch: ${{ github.ref }}
             Action By: ${{ github.actor }}
-            Action: ${{ github.event.action }}
+            Action: ${{ github.event_action }}gi
 
