@@ -1,15 +1,14 @@
 name: Push Notification
 
 on: 
-    push:
-        branches:
-            -main
-            -dev
-            -dev-*
-            -test
-    pull_request:
-        types: [opened, synchronize, reopened, closed]
-
+  push:
+    branches:
+      - main
+      - dev
+      - dev-*
+      - test
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
 
 jobs:
   notify:
@@ -20,16 +19,14 @@ jobs:
         with:
            server_address: smtp.gmail.com
            server_port: 465
-           from: ${{ secrets.MAIL_FROM }} #mail gonderdiyimizde ne gorunsun "github"
-           to: ${{ secrets.MAIL_TO }} # push etdikde bu maile getsin
-           username: ${{ secrets.MAIL_USERNAME }} #mail gondermek uchu  mail adresik
-           password: ${{ secrets.MAIL_PASSWORD }} #sifre
-           subject: ${{ github.event_name }} Notification #mail konusu
+           from: ${{ secrets.MAIL_FROM }} # mail gönderdiğimizde ne görünsün, "github"
+           to: ${{ secrets.MAIL_TO }} # push edildiğinde bu maile gitsin
+           username: ${{ secrets.MAIL_USERNAME }} # mail göndermek için mail adresi
+           password: ${{ secrets.MAIL_PASSWORD }} # şifre
+           subject: ${{ github.event_name }} Notification # mail konusu
            body:  |
             There has been a new ${{ github.event_name }} in the repository.
-            Repository : ${{ github.repository }}
-            Branch: ${{ github.ref }}
+            Repository: ${{ github.repository }}
             Branch: ${{ github.ref }}
             Action By: ${{ github.actor }}
-            Action: ${{ github.event.action }}
-
+            Action: ${{ github.event_name == 'push' && github.event.commits[0].message || github.event.pull_request.title }}
